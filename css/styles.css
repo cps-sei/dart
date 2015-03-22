@@ -79,12 +79,12 @@ section {
     float:left;
 }
 .welcometext {
-    width:38.0%; /* 616px/960px */
+    width:35.0%; /* 616px/960px */
     float:left;
     padding-left : 4%;
 }
 .sidebar {
-    width:13.041666666666666666666666666667%; /* 298px/960px */
+    width:16.041666666666666666666666666667%; /* 298px/960px */
     float:right;
 }
 .sidebar li {
