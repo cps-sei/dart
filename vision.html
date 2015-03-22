@@ -1,0 +1,108 @@
+<!doctype html>
+<!--
+    Designed by: http://www.cssing.org
+    Released for free under a Creative Commons Attribution 3.0 License: http://creativecommons.org/licenses/by/3.0/
+    Name: Mint
+    Description:  A two-columns, responsive design template.
+    Template number: 3
+    Version: 1.0
+    Released: 4.3.13
+  -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mint</title>
+    <link href='http://fonts.googleapis.com/css?family=Cutive' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Vast_Shadow' rel='stylesheet' type='text/css'>
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script>
+      // DOM ready
+      $(function() {
+      
+      // Create the dropdown base
+      $("<select />").appendTo("nav");
+      
+      // Create default option "Go to..."
+      $("<option />", {
+      "selected": "selected",
+      "value"   : "",
+      "text"    : "Select a page"
+      }).appendTo("nav select");
+      
+      // Populate dropdown with menu items
+      $("nav a").each(function() {
+      var el = $(this);
+      $("<option />", {
+      "value"   : el.attr("href"),
+      "text"    : el.text()
+      }).appendTo("nav select");
+      });
+      
+      // To make dropdown actually work
+      $("nav select").change(function() {
+      window.location = $(this).find("option:selected").val();
+      });
+      
+      });
+    </script>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li class="active"><a href="#">Vision</a></li>
+        <li><a href="">Research</a></li>
+        <li><a href="">Software</a></li>
+        <li><a href="">Videos</a></li>
+      </ul>
+    </nav>
+    <div class="wrapper">
+      <header>
+        <!-- <img src="images/header.png" alt="header pic"> -->
+        <h1><a href="#">DART Vision</a></h1>
+        <!-- <h4>Engineering High-Assurance Distributed CPS</h4> -->
+        <div class="clearfloat"></div>
+      </header>
+      <section>
+    	<div class="welcome">
+          <a href="vision.html"><img src="images/flowchart.png" alt="flowchart pic"></a>
+        </div>
+    	<div class="welcometext">
+          <p>
+            The DART project is developing algorithms, tools, and
+            techniques to developing software that ensures safe and
+            distributed adaptive cyber Distributed Adapative Real-Time
+            (DART) systems are quick
+          </p>
+        </div>
+        <div class="sidebar">
+          <!-- <h2>Learn More</h2> -->
+          <ul>
+            <li><a href="">News</a></li>
+            <li><a href="">Publications</a></li>
+            <li><a href="">Contact</a></li>
+          </ul>
+        </div>
+      </section>
+      <div class="clearfloat"></div>
+      <div class="clearfloat"></div>
+      <!-- <section> -->
+      <!--   <div class="boxes"> -->
+      <!--     <ul> -->
+      <!--       <li class="lastBox"> -->
+      <!--         <\!-- <h3>Videos</h3> -\-> -->
+      <!--         <img src="images/home.png" alt="home pic"> -->
+      <!--       </li> -->
+      <!--     </ul> -->
+      <!--   </div> -->
+      <!-- </section> -->
+      <footer> 
+        <p>
+          Copyright &copy; <a href="http://www.sei.cmu.edu">SEI/CMU</a> | Designed by <a href="http://www.cssing.org" title="Free Css Templates">Free Css Templates</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
