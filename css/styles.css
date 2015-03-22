@@ -75,15 +75,16 @@ section {
     padding:3% 01.3541666666666666666666666666667%; /* 13px/960px */
 }
 .welcome {
-    width:54.166666666666666666666666666667%; /* 616px/960px */
+    width:34.166666666666666666666666666667%; /* 616px/960px */
     float:left;
 }
 .welcometext {
-    width:30.0%; /* 616px/960px */
+    width:38.0%; /* 616px/960px */
     float:left;
+    padding-left : 4%;
 }
 .sidebar {
-    width:11.041666666666666666666666666667%; /* 298px/960px */
+    width:13.041666666666666666666666666667%; /* 298px/960px */
     float:right;
 }
 .sidebar li {
