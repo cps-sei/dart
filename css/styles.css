@@ -103,6 +103,18 @@ section {
     border-top: 2px solid #1c1d15;
 }
 
+.dartnews {
+    width:77%; /* 616px/960px */
+    float:left;
+    padding-top: 15px;
+}
+
+.dartpubs {
+    width:77%; /* 616px/960px */
+    float:left;
+    padding-top: 15px;
+}
+
 .boxes li {
     border-top: 5px solid #ff0000;
     padding-top: 15px;
