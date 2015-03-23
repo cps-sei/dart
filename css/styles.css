@@ -12,8 +12,14 @@ body {
     text-shadow:0 0px, 1px 1px #deed95;
 }
 h1 {
-    padding:15px 0 0 0;
-    font-weight:inherit;
+    font-size:3.5em; 
+    color:#1c1d15;
+    font-family: 'Vast Shadow', sans-serif;
+    /* text-transform:uppercase; */
+    text-decoration:none;
+    line-height:90px;
+    /* padding:15px 0 0 0; */
+    /* font-weight:inherit; */
 }
 h1 a {
     font-size:2.0em; 
