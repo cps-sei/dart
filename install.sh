@@ -14,16 +14,15 @@ fi
 echo "Installing packages ..."
 sudo apt-get install perl git build-essential subversion libboost-all-dev bison flex realpath cbmc tk xvfb
 
+export ACE_ROOT=$ROOT/ace/ACE_wrappers
+export MADARA_ROOT=$ROOT/madara
+export LD_LIBRARY_PATH=$ACE_ROOT/lib:$MADARA_ROOT/lib:$LD_LIBRARY_PATH
+export PATH=$ACE_ROOT/bin:$MADARA_ROOT/bin:$PATH        
 if [ -d $ROOT/ace ]; then
     echo "ACE is already installed at $ROOT/ace ..."
 else
     echo "Installing ACE ..."
     {
-        export ACE_ROOT=$ROOT/ace/ACE_wrappers
-        export MADARA_ROOT=$ROOT/madara
-        export LD_LIBRARY_PATH=$ACE_ROOT/lib:$MADARA_ROOT/lib:$LD_LIBRARY_PATH
-        export PATH=$ACE_ROOT/bin:$MADARA_ROOT/bin:$PATH
-        
         mkdir $ROOT/ace
         svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE $ROOT/ace
         cd $ACE_ROOT/ace
@@ -59,6 +58,7 @@ echo "Installing Java ..."
     export LD_LIBRARY_PATH=$JAVA_ROOT/jre/lib/amd64/server:$LD_LIBRARY_PATH
 }
 
+export VREP_ROOT=$ROOT/vrep
 if [ -d $ROOT/vrep ]; then
     echo "VREP is already installed at $ROOT/vrep ..."
 else
@@ -71,10 +71,12 @@ else
         echo "Unpacking V-REP ..."
         mkdir vrep
         tar xfz V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz -C vrep  --strip-components 1
-        export VREP_ROOT=$ROOT/vrep
     }
 fi
 
+export GAMS_ROOT=$ROOT/gams
+export LD_LIBRARY_PATH=$GAMS_ROOT/lib:$LD_LIBRARY_PATH
+export PATH=$GAMS_ROOT/bin:$PATH
 if [ -d $ROOT/gams ]; then
     echo "GAMS is already installed at $ROOT/gams ..."
 else
@@ -82,9 +84,6 @@ else
     {
         cd $ROOT
         git clone https://github.com/jredmondson/gams.git gams
-        export GAMS_ROOT=$ROOT/gams
-        export LD_LIBRARY_PATH=$GAMS_ROOT/lib:$LD_LIBRARY_PATH
-        export PATH=$GAMS_ROOT/bin:$PATH
         cd $GAMS_ROOT
         git checkout dart
         mwc.pl -features vrep=1 -type gnuace gams.mwc
@@ -93,6 +92,7 @@ else
     }
 fi
 
+export MZSRM_ROOT=$ROOT/mzsrm
 if [ -d $ROOT/mzsrm ]; then
     echo "MZSRM scheduler is already installed at $ROOT/mzsrm ..."
 else
@@ -100,12 +100,14 @@ else
     {
         cd $ROOT
         git clone https://github.com/cps-sei/mzsrm.git mzsrm
-        export MZSRM_ROOT=$ROOT/mzsrm
         echo "Compiling MZSRM ..."
         cd $MZSRM_ROOT && make &> /dev/null
     }
 fi
 
+export DMPL_ROOT=$ROOT/dmplc
+export PATH=$DMPL_ROOT/src/dmplc:$PATH
+export PATH=$DMPL_ROOT/src/vrep:$PATH
 if [ -d $ROOT/dmplc ]; then
     echo "DMPLC is already installed at $ROOT/dmplc ..."
 else
@@ -113,13 +115,9 @@ else
     {
         cd $ROOT
         git clone schaki@linux.andrew.cmu.edu:/afs/andrew.cmu.edu/usr12/schaki/git-repos/dmplc.git
-        export DMPL_ROOT=$ROOT/dmplc
-        export PATH=$DMPL_ROOT/src/dmplc:$PATH
-        export PATH=$DMPL_ROOT/src/vrep:$PATH
         cd $DMPL_ROOT
         echo "Compiling DMPLC ..."
-        make &>/dev/null
-        cp remoteApiConnections.txt $VREP_ROOT/.
+        make
     }
 fi
 
