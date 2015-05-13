@@ -125,18 +125,18 @@ echo "Creating file with commands to set environment variables ..."
 cat <<EOF > $ROOT/setenv.sh
 export ACE_ROOT=$ROOT/ace/ACE_wrappers
 export MADARA_ROOT=$ROOT/madara 
-export LD_LIBRARY_PATH=$ACE_ROOT/lib:$MADARA_ROOT/lib:$LD_LIBRARY_PATH
-export PATH=$ACE_ROOT/bin:$MADARA_ROOT/bin:$PATH
+export LD_LIBRARY_PATH=\$ACE_ROOT/lib:\$MADARA_ROOT/lib:\$LD_LIBRARY_PATH
+export PATH=\$ACE_ROOT/bin:\$MADARA_ROOT/bin:\$PATH
 export JAVA_ROOT=/usr/lib/jvm/java-7-openjdk-amd64
-export LD_LIBRARY_PATH=$JAVA_ROOT/jre/lib/amd64/server:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=\$JAVA_ROOT/jre/lib/amd64/server:\$LD_LIBRARY_PATH
 export VREP_ROOT=$ROOT/vrep
 export GAMS_ROOT=$ROOT/gams
-export LD_LIBRARY_PATH=$GAMS_ROOT/lib:$LD_LIBRARY_PATH
-export PATH=$GAMS_ROOT/bin:$PATH
+export LD_LIBRARY_PATH=\$GAMS_ROOT/lib:\$LD_LIBRARY_PATH
+export PATH=\$GAMS_ROOT/bin:\$PATH
 export MZSRM_ROOT=$ROOT/mzsrm
 export DMPL_ROOT=$ROOT/dmplc
-export PATH=$DMPL_ROOT/src/dmplc:$PATH
-export PATH=$DMPL_ROOT/src/vrep:$PATH
+export PATH=\$DMPL_ROOT/src/dmplc:\$PATH
+export PATH=\$DMPL_ROOT/src/vrep:\$PATH
 EOF
 
 echo "##################################################"
