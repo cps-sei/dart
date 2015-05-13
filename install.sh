@@ -120,6 +120,7 @@ else
         cd $ROOT
         git clone schaki@linux.andrew.cmu.edu:/afs/andrew.cmu.edu/usr12/schaki/git-repos/dmplc.git
         cd $DMPL_ROOT
+        git checkout stable
         echo "Compiling DMPLC ..."
         make &> /dev/null
     }
