@@ -117,7 +117,7 @@ else
         git clone schaki@linux.andrew.cmu.edu:/afs/andrew.cmu.edu/usr12/schaki/git-repos/dmplc.git
         cd $DMPL_ROOT
         echo "Compiling DMPLC ..."
-        make
+        make &> /dev/null
     }
 fi
 
