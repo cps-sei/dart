@@ -72,7 +72,7 @@ else
         mkdir vrep
         tar xfz V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz -C vrep  --strip-components 1
         for i in doNotShowOpenglSettingsMessage doNotShowCrashRecoveryMessage doNotShowUpdateCheckMessage; do
-            cat vrep/system/usrset.txt | sed 's/$i = false/$i = true' > vrep/system/usrset.txt1
+            cat vrep/system/usrset.txt | sed "s/$i = false/$i = true/g" > vrep/system/usrset.txt1
             mv vrep/system/usrset.txt1 vrep/system/usrset.txt
         done
     }
