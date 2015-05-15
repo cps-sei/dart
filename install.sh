@@ -76,7 +76,9 @@ function install_vrep {
     else
         echo "Installing V-REP ..."
         cd $ROOT
-        if [ ! -f V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz ]; then
+        if [ -f /tmp/V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz ]; then
+            cp /tmp/V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz .
+        else
             wget http://coppeliarobotics.com/V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz
         fi
         echo "Unpacking V-REP ..."
