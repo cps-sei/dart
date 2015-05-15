@@ -7,7 +7,7 @@ fi
 
 function cleanup {
     echo ""; echo ""; echo "###############################################"
-    echo "ERROR: something went wrong ... run the following command!!"
+    echo "ERROR: something went wrong !! Run the following command:"
     echo "rm -fr $ROOT && $0 $ROOT"
     exit 1
 }
