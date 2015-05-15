@@ -159,7 +159,7 @@ export PATH=\$DMPL_ROOT/src/vrep:\$PATH
 EOF
 }
 
-(create_install_dir && install_packages && install_ace && install_madara && install_vrep && install_gams && install_mzsrm && intall_dmplc && create_setenv) || cleanup
+(create_install_dir && install_packages && install_ace && install_madara && install_vrep && install_gams && install_mzsrm && install_dmplc && create_setenv) || cleanup
 
 echo "##################################################"
 echo "Installation Complete!!"
