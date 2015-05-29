@@ -80,6 +80,15 @@ header {
 section {
     padding:3% 01.3541666666666666666666666666667%; /* 13px/960px */
 }
+.dartfig {
+    width:59.166666666666666666666666666667%; /* 616px/960px */
+    float:left;
+}
+.darttext {
+    width:15.0%; /* 616px/960px */
+    float:left;
+    padding-left : 4%;
+}
 .welcome {
     width:34.166666666666666666666666666667%; /* 616px/960px */
     float:left;
