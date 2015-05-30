@@ -132,9 +132,8 @@ function install_madara {
         echo "Installing MADARA ..." | tee -a $LOG
         mkdir $ROOT/madara
         echo "Checking out and configuring MADARA ..." | tee -a $LOG
-        git clone git://git.code.sf.net/p/madara/code $ROOT/madara 2>&1 | tee -a $LOG
+        git clone -b dart git://git.code.sf.net/p/madara/code $ROOT/madara 2>&1 | tee -a $LOG
         cd $MADARA_ROOT
-        git checkout dart 2>&1 | tee -a $LOG
         perl $ACE_ROOT/bin/mwc.pl -type gnuace MADARA.mwc 2>&1 | tee -a $LOG
         echo "Compiling MADARA ..." | tee -a $LOG
         make tests=1 2>&1 | tee -a $LOG
@@ -173,9 +172,8 @@ function install_gams {
         echo "Installing GAMS ..." | tee -a $LOG
         cd $ROOT
         echo "Checking out and configuring GAMS ..." | tee -a $LOG
-        git clone https://github.com/jredmondson/gams.git gams 2>&1 | tee -a $LOG
+        git clone -b dart https://github.com/jredmondson/gams.git gams 2>&1 | tee -a $LOG
         cd $GAMS_ROOT
-        git checkout dart 2>&1 | tee -a $LOG
         mwc.pl -features vrep=1 -type gnuace gams.mwc 2>&1 | tee -a $LOG
         echo "Compiling GAMS ..." | tee -a $LOG
         make tests=1 vrep=1 2>&1 | tee -a $LOG
@@ -208,9 +206,8 @@ function install_dmplc {
         echo "Installing DMPLC ..." | tee -a $LOG
         cd $ROOT
         echo "Checking out DMPLC ..." | tee -a $LOG
-        git clone schaki@linux.andrew.cmu.edu:/afs/andrew.cmu.edu/usr12/schaki/git-repos/dmplc.git
+        git clone -b stable schaki@linux.andrew.cmu.edu:/afs/andrew.cmu.edu/usr12/schaki/git-repos/dmplc.git
         cd $DMPL_ROOT
-        git checkout stable 2>&1 | tee -a $LOG
         echo "Compiling DMPLC ..." | tee -a $LOG
         make MZSRM=$MZSRM 2>&1 | tee -a $LOG
     fi
