@@ -206,7 +206,7 @@ function install_dmplc {
         echo "Installing DMPLC ..." | tee -a $LOG
         cd $ROOT
         echo "Checking out DMPLC ..." | tee -a $LOG
-        git clone -b stable schaki@linux.andrew.cmu.edu:/afs/andrew.cmu.edu/usr12/schaki/git-repos/dmplc.git
+        git clone -b stable https://github.com/cps-sei/dmplc.git
         cd $DMPL_ROOT
         echo "Compiling DMPLC ..." | tee -a $LOG
         make MZSRM=$MZSRM 2>&1 | tee -a $LOG
