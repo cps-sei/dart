@@ -181,8 +181,8 @@ function install_gams {
 }
 
 function install_mzsrm {
-    export MZSRM_ROOT=$ROOT/mzsrm
     if [ "$MZSRM" == "1" ]; then
+        export MZSRM_ROOT=$ROOT/mzsrm
         if [ -d $ROOT/mzsrm ]; then
             echo "MZSRM scheduler is already installed at $ROOT/mzsrm ..." | tee -a $LOG
         else
@@ -226,11 +226,15 @@ export VREP_ROOT=$ROOT/vrep
 export GAMS_ROOT=$ROOT/gams
 export LD_LIBRARY_PATH=\$GAMS_ROOT/lib:\$LD_LIBRARY_PATH
 export PATH=\$GAMS_ROOT/bin:\$PATH
-export MZSRM_ROOT=$ROOT/mzsrm
 export DMPL_ROOT=$ROOT/dmplc
 export PATH=\$DMPL_ROOT/src/dmplc:\$PATH
 export PATH=\$DMPL_ROOT/src/vrep:\$PATH
 EOF
+    if [ "$MZSRM" == "1" ]; then
+    cat <<EOF >> $ROOT/setenv.sh
+export MZSRM_ROOT=$ROOT/mzsrm
+EOF
+    fi
 }
 
 (create_install_dir && install_packages && install_ace && install_madara && install_vrep && install_gams && install_mzsrm && install_dmplc && create_setenv) || cleanup
