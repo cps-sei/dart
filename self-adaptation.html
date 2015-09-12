@@ -52,6 +52,7 @@
     <nav>
       <ul>
         <!-- <li class="active"><a href="./index.html">Home</a></li> -->
+        <li><a href="./index.html">Home</a></li>
         <li><a href="./vision.html">Vision</a></li>
         <li><a href="./research.html">Research</a></li>
         <li><a href="./software.html">Software</a></li>
@@ -66,28 +67,96 @@
         <div class="clearfloat"></div>
       </header>
       <section>
-    	<div class="dartpubs">
-<h4>Proactive Latency-Aware Self-Adaptation</h4>
-Self-adaptation allows a system to change its behavior or structure in response to changes in the environment in which it operates or the system itself, so that it continues to satisfies its requirements despite these changes. The adaptations are planned and executed in terms of adaptation tactics—actions that perform a change in the system. Although some adaptation tactics can be almost instantaneous (e.g., a parameter change), other tactics take some time to complete; that is, these adaptation tactics have latency.
-<br>
-Most adaptation approaches ignore tactic latency when deciding how to adapt, and that may result in suboptimal adaptations for two reasons. First, if there are two possible tactics the system could use, and one is faster than the other, the system is not able to select the faster tactic. Second, if tactics have latency and the system reacts to changes, the change in the system will be late with respect to when it is needed.
-<br>
-We propose proactive latency-aware adaptation as a way to address these two problems and achieve better effectiveness in self-adaptation. Our approach takes into account the latency of adaptation tactics when deciding how to adapt. In addition, to make sure the system adapts in a timely manner, the approach is proactive, so that it can initiate adaptations with the necessary lead time.
-<br>
-Proactive adaptation requires making decisions based on predictions of the near future state of the environment. In the case of DART systems, these predictions can be based on a combination of the physical movement of the system elements in space and time, and information about the relevant characteristics of the environment. Nevertheless, these predictions are subject to uncertainty. Our approach explicitly considers the uncertainty of these predictions when deciding how to adapt.
-<br>
-<br>
-<h4>Probabilistic model checking approach</h4>
-Probabilistic model checking is a formal technique to verify systems with stochastic behavior. By analyzing the composition of a model of the system with a model of the stochastic behavior of the environment, we can leverage probabilistic model checking to take into account the uncertainty of the environment predictions. In particular, we use models in which the adaptation decisions are left as nondeterministic choices, and exploit the ability of the PRISM probabilistic model checker to synthesize strategies or policies that resolve those choices in a way that maximizes the expected value of an objective function. In that way, we can make adaptation decisions that take into account the uncertainty of the environment predictions by exploring all the possible evolutions of the environment in a finite look-ahead horizon.
-<br>
-More details about this approach can be found in the following publication:<br><br>
-<a href="http://works.bepress.com/gabriel_moreno/25/">Proactive Self-Adaptation under Uncertainty: a Probabilistic Model Checking Approach</a>. Gabriel Moreno, Javier Camara, David Garlan, Bradley Schmerl. <i>In proceedings of the European Software Engineering Conference and the Symposium on the Foundations of Software Engineering (ESEC/FSE)</i>, 2015.
-<br>
-<br>
-<h4>A faster solution approach</h4>
-The previous approach involves two steps done by the model checker. First, the model checker builds a Markov decision process (MDP) from a formal specification of the system. Then, the model checker solves the MDP, computing an optimal policy to achieve the adaptation goal. This whole process is done at run time every time an adaptation decision has to be made. We are developing another approach that decouples the construction of the MDP from its solution. That way, the construction of the MDP from formal specifications can be done offline, and the solution is the only part that remains to be done at run time. In addition, the solution algorithm leverages the structure of the problem to reduce the number of states of the environment that have to be considered at each iteration.
-<br>
-In our experiments we have found the decision time to be reduced 10 times with respect to the decision based on probabilistic model checking.
+    	<div class="welcome">
+          <a href="vision.html"><img src="images/flowchart.png" alt="flowchart pic"></a>
+        </div>
+    	<div class="welcometext">
+          Self-adaptation allows a system to
+          change its behavior or structure in response to changes in
+          the environment in which it operates or the system itself,
+          so that it continues to satisfies its requirements despite
+          these changes. The adaptations are planned and executed in
+          terms of adaptation tactics—actions that perform a change in
+          the system. Although some adaptation tactics can be almost
+          instantaneous (e.g., a parameter change), other tactics take
+          some time to complete; that is, these adaptation tactics
+          have latency.
+          <br><br>
+          <h4>Proactive Latency-Aware Self-Adaptation</h4>Most
+          adaptation approaches ignore tactic latency when deciding
+          how to adapt, and that may result in suboptimal adaptations
+          for two reasons. <i>First</i>, if there are two possible
+          tactics the system could use, and one is faster than the
+          other, the system is not able to select the faster
+          tactic. <i>Second</i>, if tactics have latency and the system
+          reacts to changes, the change in the system will be late
+          with respect to when it is needed.
+          <br>
+          We propose <i>proactive latency-aware adaptation</i> as a
+          way to address these two problems and achieve better
+          effectiveness in self-adaptation. Our approach takes into
+          account the latency of adaptation tactics when deciding how
+          to adapt. In addition, to make sure the system adapts in a
+          timely manner, the approach is proactive, so that it can
+          initiate adaptations with the necessary lead time.
+          <br>
+          Proactive adaptation requires making decisions based on
+          predictions of the near future state of the environment. In
+          the case of DART systems, these predictions can be based on
+          a combination of the physical movement of the system
+          elements in space and time, and information about the
+          relevant characteristics of the environment. Nevertheless,
+          these predictions are subject to uncertainty. Our approach
+          explicitly considers the uncertainty of these predictions
+          when deciding how to adapt.
+          <br>
+          <br>
+          <h4>Probabilistic model checking approach</h4> Probabilistic
+          model checking is a formal technique to verify systems with
+          stochastic behavior. By analyzing the composition of a model
+          of the system with a model of the stochastic behavior of the
+          environment, we can leverage probabilistic model checking to
+          take into account the uncertainty of the environment
+          predictions. In particular, we use models in which the
+          adaptation decisions are left as nondeterministic choices,
+          and exploit the ability of the PRISM probabilistic model
+          checker to synthesize strategies or policies that resolve
+          those choices in a way that maximizes the expected value of
+          an objective function. In that way, we can make adaptation
+          decisions that take into account the uncertainty of the
+          environment predictions by exploring all the possible
+          evolutions of the environment in a finite look-ahead
+          horizon.
+          <br>
+          More details about this approach can be found in the
+          following publication:<br><br>
+          <a href="http://works.bepress.com/gabriel_moreno/25/">Proactive
+          Self-Adaptation under Uncertainty: a Probabilistic Model
+          Checking Approach</a>. Gabriel Moreno, Javier Camara, David
+          Garlan, Bradley Schmerl. <i>In proceedings of the European
+          Software Engineering Conference and the Symposium on the
+          Foundations of Software Engineering (ESEC/FSE)</i>, 2015.
+          <br>
+          <br>
+          <h4>A faster solution approach</h4> The previous approach
+          involves two steps done by the model checker. First, the
+          model checker builds a Markov decision process (MDP) from a
+          formal specification of the system. Then, the model checker
+          solves the MDP, computing an optimal policy to achieve the
+          adaptation goal. This whole process is done at run time
+          every time an adaptation decision has to be made. We are
+          developing another approach that decouples the construction
+          of the MDP from its solution. That way, the construction of
+          the MDP from formal specifications can be done offline, and
+          the solution is the only part that remains to be done at run
+          time. In addition, the solution algorithm leverages the
+          structure of the problem to reduce the number of states of
+          the environment that have to be considered at each
+          iteration.
+          <br>
+          In our experiments we have found the decision time to be
+          reduced 10 times with respect to the decision based on
+          probabilistic model checking.
         </div>
         <div class="sidebar">
           <!-- <h2>Learn More</h2> -->
