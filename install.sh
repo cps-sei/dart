@@ -54,6 +54,9 @@
 
 # DM-0002489
 
+#the version of DART to install
+VERSION=0.1
+
 #check command line options
 if [ "$#" == "1" ] && [ "$1" != "-mzsrm" ]; then
     MZSRM="0"
@@ -132,7 +135,7 @@ function install_madara {
         echo "Installing MADARA ..." | tee -a $LOG
         mkdir $ROOT/madara
         echo "Checking out and configuring MADARA ..." | tee -a $LOG
-        git clone -b dart git://git.code.sf.net/p/madara/code $ROOT/madara 2>&1 | tee -a $LOG
+        git clone -b dart-$VERSION git://git.code.sf.net/p/madara/code $ROOT/madara 2>&1 | tee -a $LOG
         cd $MADARA_ROOT
         perl $ACE_ROOT/bin/mwc.pl -type gnuace MADARA.mwc 2>&1 | tee -a $LOG
         echo "Compiling MADARA ..." | tee -a $LOG
@@ -172,7 +175,7 @@ function install_gams {
         echo "Installing GAMS ..." | tee -a $LOG
         cd $ROOT
         echo "Checking out and configuring GAMS ..." | tee -a $LOG
-        git clone -b dart https://github.com/jredmondson/gams.git gams 2>&1 | tee -a $LOG
+        git clone -b dart-$VERSION https://github.com/jredmondson/gams.git gams 2>&1 | tee -a $LOG
         cd $GAMS_ROOT
         mwc.pl -features vrep=1 -type gnuace gams.mwc 2>&1 | tee -a $LOG
         echo "Compiling GAMS ..." | tee -a $LOG
@@ -206,7 +209,7 @@ function install_dmplc {
         echo "Installing DMPLC ..." | tee -a $LOG
         cd $ROOT
         echo "Checking out DMPLC ..." | tee -a $LOG
-        git clone -b stable https://github.com/cps-sei/dmplc.git
+        git clone -b release-$VERSION https://github.com/cps-sei/dmplc.git
         cd $DMPL_ROOT
         echo "Compiling DMPLC ..." | tee -a $LOG
         make MZSRM=$MZSRM 2>&1 | tee -a $LOG
