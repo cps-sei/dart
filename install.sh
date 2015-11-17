@@ -54,18 +54,24 @@
 
 # DM-0002489
 
-#the version of DART to install
-VERSION=0.1
-
 #check command line options
-if [ "$#" == "1" ] && [ "$1" != "-mzsrm" ]; then
+if [ "$#" == "2" ] && [ "$1" != "-mzsrm" ]; then
     MZSRM="0"
     ROOT="$1"
-elif [ "$#" == "2" ] && [ "$1" == "-mzsrm" ]; then
+    VERSION="$2"
+elif [ "$#" == "3" ] && [ "$1" == "-mzsrm" ]; then
     MZSRM="1"
     ROOT="$2"
+    VERSION="$3"
 else
-    echo "Usage : $0 [-mzsrm] <install-dir>"
+    echo "Usage : $0 [-mzsrm] <install-dir> <version>"
+    exit 1
+fi
+
+#check legal version
+if [ "$VERSION" != "0.1" ] && [ "$VERSION" != "0.2" ]; then
+    echo "ERROR : Illegal version $VERSION ..."
+    echo "ERROR : Version must be 0.1 or 0.2 ..."
     exit 1
 fi
 
