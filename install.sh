@@ -101,7 +101,7 @@ function create_install_dir {
 
 function install_packages {
     echo "Installing packages ..." | tee -a $LOG
-    sudo apt-get install perl git build-essential subversion libboost-all-dev bison flex realpath cbmc tk xvfb libyaml-cpp-dev
+    sudo apt-get install perl git build-essential subversion libboost-all-dev bison flex realpath cbmc tk xvfb libyaml-cpp-dev ant
 
     if [ "$MZSRM" == "1" ]; then
         echo "Installing Java ..." | tee -a $LOG
