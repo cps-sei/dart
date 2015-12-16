@@ -69,9 +69,9 @@ else
 fi
 
 #check legal version
-if [ "$VERSION" != "0.1" ] && [ "$VERSION" != "0.2" ]; then
+if [ "$VERSION" != "0.1" ] && [ "$VERSION" != "0.2.1" ] && [ "$VERSION" != "0.2.2" ]; then
     echo "ERROR : Illegal version $VERSION ..."
-    echo "ERROR : Version must be 0.1 or 0.2 ..."
+    echo "ERROR : Version must be 0.1 or 0.2.1 or 0.2.2 ..."
     exit 1
 fi
 
