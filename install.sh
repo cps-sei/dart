@@ -151,19 +151,20 @@ function install_madara {
 
 function install_vrep {
     export VREP_ROOT=$ROOT/vrep
+    VREP_PKG=V-REP_PRO_EDU_V3_2_3_64_Linux.tar.gz
     if [ -d $ROOT/vrep ]; then
         echo "VREP is already installed at $ROOT/vrep ..." | tee -a $LOG
     else
         echo "Installing V-REP ..." | tee -a $LOG
         cd $ROOT
-        if [ -f /tmp/V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz ]; then
-            cp /tmp/V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz .
+        if [ -f /tmp/$VREP_PKG ]; then
+            cp /tmp/$VREP_PKG .
         else
-            wget http://coppeliarobotics.com/V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz
+            wget http://coppeliarobotics.com/$VREP_PKG
         fi
         echo "Unpacking V-REP ..." | tee -a $LOG
         mkdir vrep
-        tar xfz V-REP_PRO_EDU_V3_1_3_rev2b_64_Linux.tar.gz -C vrep  --strip-components 1
+        tar xfz $VREP_PKG -C vrep  --strip-components 1
         for i in doNotShowOpenglSettingsMessage doNotShowCrashRecoveryMessage doNotShowUpdateCheckMessage; do
             cat vrep/system/usrset.txt | sed "s/$i = false/$i = true/g" > vrep/system/usrset.txt1
             mv vrep/system/usrset.txt1 vrep/system/usrset.txt
