@@ -1,6 +1,6 @@
 This is the top-level repository for the DART project. Check out the [project webpage](http://cps-sei.github.io/dart) and [wiki](https://github.com/cps-sei/dart/wiki) for more details.
 
-## Changelog
+#### Changelog
 
 **[0.2.2]** Updated to new MADARA and GAMS. There have been major changes
             in these two packages since our last release.
