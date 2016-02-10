@@ -101,12 +101,28 @@ function create_install_dir {
 }
 
 function install_packages {
-    echo "Installing packages ..." | tee -a $LOG
-    sudo apt-get install perl git build-essential subversion libboost-all-dev bison flex realpath cbmc tk xvfb libyaml-cpp-dev ant
+    echo "Checking packages ..." | tee -a $LOG
+    PKGS="perl git build-essential subversion libboost-all-dev bison flex realpath tk cbmc xvfb libyaml-cpp-dev ant"
+    NOT_FOUND=""
+    for i in $PKGS; do
+        if ! dpkg -l $i &> /dev/null; then
+            NOT_FOUND+=" $i"
+        fi
+    done
+    if [ "x$NOT_FOUND" != "x" ]; then
+        echo "ERROR: please install packages:$NOT_FOUND" | tee -a $LOG
+        echo "e.g., run sudo apt-get install$NOT_FOUND" | tee -a $LOG
+        return 1
+    fi
 
     if [ "$MZSRM" == "1" ]; then
-        echo "Installing Java ..." | tee -a $LOG
-        sudo apt-get install openjdk-7-jdk
+        echo "Checking Java ..." | tee -a $LOG
+        PKG="openjdk-7-jdk"
+        if ! dpkg -l $PKG &> /dev/null; then
+            echo "ERROR: please install packages: $PKG" | tee -a $LOG
+            echo "e.g., run sudo apt-get install $PKG" | tee -a $LOG
+            return 1
+        fi
         export JAVA_ROOT=/usr/lib/jvm/java-7-openjdk-amd64
         export LD_LIBRARY_PATH=$JAVA_ROOT/jre/lib/amd64/server:$LD_LIBRARY_PATH
     fi
