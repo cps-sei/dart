@@ -182,10 +182,16 @@ function install_vrep {
         echo "Unpacking V-REP ..." | tee -a $LOG
         mkdir vrep
         tar xfz $VREP_PKG -C vrep  --strip-components 1
-        for i in doNotShowOpenglSettingsMessage doNotShowCrashRecoveryMessage doNotShowUpdateCheckMessage; do
-            cat vrep/system/usrset.txt | sed "s/$i = false/$i = true/g" > vrep/system/usrset.txt1
-            mv vrep/system/usrset.txt1 vrep/system/usrset.txt
-        done
+        if [ -f vrep/system/usrset.txt ]; then
+            for i in doNotShowOpenglSettingsMessage doNotShowCrashRecoveryMessage doNotShowUpdateCheckMessage; do
+                cat vrep/system/usrset.txt | sed "s/$i = false/$i = true/g" > vrep/system/usrset.txt1
+                mv vrep/system/usrset.txt1 vrep/system/usrset.txt
+            done
+        else
+            for i in doNotShowOpenglSettingsMessage doNotShowCrashRecoveryMessage doNotShowUpdateCheckMessage; do
+                echo "$i = true" >> vrep/system/usrset.txt
+            done
+        fi
     fi
 }
 
