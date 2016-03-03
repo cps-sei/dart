@@ -168,7 +168,7 @@ function install_madara {
 
 function install_vrep {
     export VREP_ROOT=$ROOT/vrep
-    VREP_PKG=V-REP_PRO_EDU_V3_2_2_64_Linux.tar.gz
+    VREP_PKG=V-REP_PRO_EDU_V3_3_0_64_Linux.tar.gz
     if [ -d $ROOT/vrep ]; then
         echo "VREP is already installed at $ROOT/vrep ..." | tee -a $LOG
     else
