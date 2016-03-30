@@ -92,6 +92,9 @@ trap "cleanup" SIGINT SIGTERM SIGHUP
 
 LOG=$ROOT/install.log
 rm -f $LOG
+SETENV=$ROOT/setenv.sh
+rm -f $SETENV
+
 
 function create_install_dir {
     if [ ! -d $ROOT ]; then
@@ -129,17 +132,18 @@ function install_packages {
 }
 
 function install_ace {
-    export ACE_ROOT=$ROOT/ace/ACE_wrappers
+    export ACE_DIR=$ROOT/ace
+    export ACE_ROOT=$ACE_DIR/ACE_wrappers
     export MADARA_ROOT=$ROOT/madara
     export LD_LIBRARY_PATH=$ACE_ROOT/lib:$MADARA_ROOT/lib:$LD_LIBRARY_PATH
     export PATH=$ACE_ROOT/bin:$MADARA_ROOT/bin:$PATH        
-    if [ -d $ROOT/ace ]; then
-        echo "ACE is already installed at $ROOT/ace ..." | tee -a $LOG
+    if [ -d $ACE_DIR ]; then
+        echo "ACE is already installed at $ACE_DIR ..." | tee -a $LOG
     else
         echo "Installing ACE ..." | tee -a $LOG
-        mkdir $ROOT/ace
+        mkdir $ACE_DIR
         echo "Checking out and configuring ACE ..." | tee -a $LOG
-        svn checkout svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE $ROOT/ace 2>&1 | tee -a $LOG
+        svn checkout svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE $ACE_DIR 2>&1 | tee -a $LOG
         cd $ACE_ROOT/ace
         echo "#include \"ace/config-linux.h\"" > config.h
         cd $ACE_ROOT/include/makeinclude
@@ -152,13 +156,13 @@ function install_ace {
 }
 
 function install_madara {
-    if [ -d $ROOT/madara ]; then
-        echo "MADARA is already installed at $ROOT/madara ..." | tee -a $LOG
+    if [ -d $MADARA_ROOT ]; then
+        echo "MADARA is already installed at $MADARA_ROOT ..." | tee -a $LOG
     else
         echo "Installing MADARA ..." | tee -a $LOG
-        mkdir $ROOT/madara
+        mkdir $MADARA_ROOT
         echo "Checking out and configuring MADARA ..." | tee -a $LOG
-        git clone -b dart-$VERSION http://git.code.sf.net/p/madara/code $ROOT/madara 2>&1 | tee -a $LOG
+        git clone -b dart-$VERSION http://git.code.sf.net/p/madara/code $MADARA_ROOT 2>&1 | tee -a $LOG
         cd $MADARA_ROOT
         perl $ACE_ROOT/bin/mwc.pl -type gnuace MADARA.mwc 2>&1 | tee -a $LOG
         echo "Compiling MADARA ..." | tee -a $LOG
@@ -169,8 +173,8 @@ function install_madara {
 function install_vrep {
     export VREP_ROOT=$ROOT/vrep
     VREP_PKG=V-REP_PRO_EDU_V3_3_0_64_Linux.tar.gz
-    if [ -d $ROOT/vrep ]; then
-        echo "VREP is already installed at $ROOT/vrep ..." | tee -a $LOG
+    if [ -d $VREP_ROOT ]; then
+        echo "VREP is already installed at $VREP_ROOT ..." | tee -a $LOG
     else
         echo "Installing V-REP ..." | tee -a $LOG
         cd $ROOT
@@ -199,8 +203,8 @@ function install_gams {
     export GAMS_ROOT=$ROOT/gams
     export LD_LIBRARY_PATH=$GAMS_ROOT/lib:$LD_LIBRARY_PATH
     export PATH=$GAMS_ROOT/bin:$PATH
-    if [ -d $ROOT/gams ]; then
-        echo "GAMS is already installed at $ROOT/gams ..." | tee -a $LOG
+    if [ -d $GAMS_ROOT ]; then
+        echo "GAMS is already installed at $GAMS_ROOT ..." | tee -a $LOG
     else
         echo "Installing GAMS ..." | tee -a $LOG
         cd $ROOT
@@ -216,8 +220,8 @@ function install_gams {
 function install_mzsrm {
     if [ "$MZSRM" == "1" ]; then
         export MZSRM_ROOT=$ROOT/mzsrm
-        if [ -d $ROOT/mzsrm ]; then
-            echo "MZSRM scheduler is already installed at $ROOT/mzsrm ..." | tee -a $LOG
+        if [ -d $MZSRM_ROOT ]; then
+            echo "MZSRM scheduler is already installed at $MZSRM_ROOT ..." | tee -a $LOG
         else
             echo "Installing MZSRM Scheduler ..." | tee -a $LOG
             cd $ROOT
@@ -233,8 +237,8 @@ function install_dmplc {
     export DMPL_ROOT=$ROOT/dmplc
     export PATH=$DMPL_ROOT/src/dmplc:$PATH
     export PATH=$DMPL_ROOT/src/vrep:$PATH
-    if [ -d $ROOT/dmplc ]; then
-        echo "DMPLC is already installed at $ROOT/dmplc ..." | tee -a $LOG
+    if [ -d $DMPL_ROOT ]; then
+        echo "DMPLC is already installed at $DMPL_ROOT ..." | tee -a $LOG
     else
         echo "Installing DMPLC ..." | tee -a $LOG
         cd $ROOT
@@ -248,24 +252,24 @@ function install_dmplc {
 
 function create_setenv {
     echo "Creating file with commands to set environment variables ..." | tee -a $LOG
-    cat <<EOF > $ROOT/setenv.sh
-export ACE_ROOT=$ROOT/ace/ACE_wrappers
-export MADARA_ROOT=$ROOT/madara 
+    cat <<EOF > $SETENV
+export ACE_ROOT=$ACE_DIR/ACE_wrappers
+export MADARA_ROOT=$MADARA_ROOT 
 export LD_LIBRARY_PATH=\$ACE_ROOT/lib:\$MADARA_ROOT/lib:\$LD_LIBRARY_PATH
 export PATH=\$ACE_ROOT/bin:\$MADARA_ROOT/bin:\$PATH
 export JAVA_ROOT=/usr/lib/jvm/java-7-openjdk-amd64
 export LD_LIBRARY_PATH=\$JAVA_ROOT/jre/lib/amd64/server:\$LD_LIBRARY_PATH
-export VREP_ROOT=$ROOT/vrep
-export GAMS_ROOT=$ROOT/gams
+export VREP_ROOT=$VREP_ROOT
+export GAMS_ROOT=$GAMS_ROOT
 export LD_LIBRARY_PATH=\$GAMS_ROOT/lib:\$LD_LIBRARY_PATH
 export PATH=\$GAMS_ROOT/bin:\$PATH
-export DMPL_ROOT=$ROOT/dmplc
+export DMPL_ROOT=$DMPL_ROOT
 export PATH=\$DMPL_ROOT/src/dmplc:\$PATH
 export PATH=\$DMPL_ROOT/src/vrep:\$PATH
 EOF
     if [ "$MZSRM" == "1" ]; then
-    cat <<EOF >> $ROOT/setenv.sh
-export MZSRM_ROOT=$ROOT/mzsrm
+    cat <<EOF >> $SETENV
+export MZSRM_ROOT=$MZSRM_ROOT
 EOF
     fi
 }
@@ -274,7 +278,7 @@ EOF
 
 echo "##################################################" | tee -a $LOG
 echo "Installation Complete!! Check $LOG for details." | tee -a $LOG
-echo "environment variables are in $ROOT/setenv.sh" | tee -a $LOG
+echo "environment variables are in $SETENV" | tee -a $LOG
 echo "you should append the contents of this file to your .bashrc" | tee -a $LOG
 echo "alternatively, source this file before running any DART commands" | tee -a $LOG
 echo "##################################################" | tee -a $LOG
