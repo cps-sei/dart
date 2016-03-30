@@ -158,7 +158,7 @@ function install_madara {
         echo "Installing MADARA ..." | tee -a $LOG
         mkdir $ROOT/madara
         echo "Checking out and configuring MADARA ..." | tee -a $LOG
-        git clone -b dart-$VERSION git://git.code.sf.net/p/madara/code $ROOT/madara 2>&1 | tee -a $LOG
+        git clone -b dart-$VERSION http://git.code.sf.net/p/madara/code $ROOT/madara 2>&1 | tee -a $LOG
         cd $MADARA_ROOT
         perl $ACE_ROOT/bin/mwc.pl -type gnuace MADARA.mwc 2>&1 | tee -a $LOG
         echo "Compiling MADARA ..." | tee -a $LOG
