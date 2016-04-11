@@ -68,11 +68,22 @@ else
     exit 1
 fi
 
+#check if the specified version is legal
+VALID_VERSIONS="0.1 0.2.1 0.2.2 0.2.3 0.3.0"
+function valid_version {
+    for i in $VALID_VERSIONS; do
+        if [ "$i" == "$1" ]; then
+            echo 1
+            return
+        fi
+    done
+    echo 0
+}
+
 #check legal version
-if [ "$VERSION" != "0.1" ] && [ "$VERSION" != "0.2.1" ] && [ "$VERSION" != "0.2.2" ] && \
-       [ "$VERSION" != "0.2.3" ]; then
+if [ $(valid_version $VERSION) == "0" ]; then
     echo "ERROR : Illegal version $VERSION ..."
-    echo "ERROR : Version must be 0.1 or 0.2.1 or 0.2.2 or 0.2.3 ..."
+    echo "ERROR : Version must one of { $VALID_VERSIONS }"
     exit 1
 fi
 
