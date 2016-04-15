@@ -106,7 +106,7 @@ rm -f $LOG
 SETENV=$ROOT/setenv.sh
 rm -f $SETENV
 
-
+#create installation directory
 function create_install_dir {
     if [ ! -d $ROOT ]; then
         rm -fr $ROOT
