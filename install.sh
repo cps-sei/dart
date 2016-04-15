@@ -114,9 +114,28 @@ function create_install_dir {
     fi
 }
 
+#required packages
+PKGS="perl git build-essential subversion libboost-all-dev bison flex realpath tk xvfb libyaml-cpp-dev"
+
+#check for package binaries. if not found, add them to packages to be
+#installed
+function check_package_bin {
+    local PKG="$1"
+    local PKG_BIN=$(which $PKG)
+    if [[ "$?" == "0" ]]; then
+        echo "$PKG found : $PKG_BIN"
+    else
+        PKGS+=" $PKG"
+    fi
+}
+
+#install packages
 function install_packages {
     echo "Checking packages ..." | tee -a $LOG
-    PKGS="perl git build-essential subversion libboost-all-dev bison flex realpath tk cbmc xvfb libyaml-cpp-dev ant"
+
+    #check for binaries
+    for i in cbmc ant; do check_package_bin $i; done
+    
     NOT_FOUND=""
     for i in $PKGS; do
         if ! dpkg -l $i &> /dev/null; then
