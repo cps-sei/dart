@@ -54,17 +54,15 @@
 
 # DM-0002489
 
-DEF_VERSION="0.3.1"
-VERSION=$DEF_VERSION
+VERSION=""
 MZSRM="0"
 ROOT=""
 
 #print usage
 function usage {
-    echo "Usage : install.sh [-args] <install-dir>"
+    echo "Usage : install.sh [-args] <install-dir> <version>"
     echo "  Optional Arguments:"
     echo "    -mz | --mzsrm       Install MZSRM scheduler and analysis"
-    echo "    -v  | --version V   Install version V (default $DEF_VERSION)."
 }
 
 #parse command line options
@@ -74,13 +72,6 @@ while true; do
         -mz|--mzsrm)
             MZSRM=1
             ;;
-        -v|--version)
-            shift
-            VERSION="$1"
-            if [ -z $VERSION ]; then
-                echo "ERROR: No version specified after -v|--version!!"; usage; exit 1
-            fi
-            ;;
         "")
             break
             ;;
@@ -88,6 +79,9 @@ while true; do
             case "$argc" in
                 0)
                     ROOT="$1"
+                    ;;
+                1)
+                    VERSION="$1"
                     ;;
                 *)
                     echo Unexpected argument: $1
