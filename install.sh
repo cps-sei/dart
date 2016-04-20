@@ -104,7 +104,7 @@ done
 [ -z "$ROOT" ] && echo "ERROR: no install dir specified!!" && usage && exit 1
 
 #check if the specified version is legal
-VALID_VERSIONS="0.1 0.2.1 0.2.2 0.2.3 0.3.0"
+VALID_VERSIONS="0.1 0.2.1 0.2.2 0.2.3 0.3.0 0.3.1"
 function valid_version {
     for i in $VALID_VERSIONS; do
         if [ "$i" == "$1" ]; then
