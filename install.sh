@@ -54,19 +54,54 @@
 
 # DM-0002489
 
-#check command line options
-if [ "$#" == "2" ] && [ "$1" != "-mzsrm" ]; then
-    MZSRM="0"
-    ROOT="$1"
-    VERSION="$2"
-elif [ "$#" == "3" ] && [ "$1" == "-mzsrm" ]; then
-    MZSRM="1"
-    ROOT="$2"
-    VERSION="$3"
-else
-    echo "Usage : $0 [-mzsrm] <install-dir> <version>"
-    exit 1
-fi
+DEF_VERSION="0.3.0"
+VERSION=$DEF_VERSION
+MZSRM="0"
+ROOT=""
+
+#print usage
+function usage {
+    echo "Usage : install.sh [-args] <install-dir>"
+    echo "  Optional Arguments:"
+    echo "    -mz | --mzsrm       Install MZSRM scheduler and analysis"
+    echo "    -v  | --version V   Install version V (default $DEF_VERSION)."
+}
+
+#parse command line options
+argc=0
+while true; do
+    case "$1" in
+        -mz|--mzsrm)
+            MZSRM=1
+            ;;
+        -v|--version)
+            shift
+            VERSION="$1"
+            if [ -z $VERSION ]; then
+                echo "ERROR: No version specified after -v|--version!!"; usage; exit 1
+            fi
+            ;;
+        "")
+            break
+            ;;
+        *)
+            case "$argc" in
+                0)
+                    ROOT="$1"
+                    ;;
+                *)
+                    echo Unexpected argument: $1
+                    usage
+                    exit 1
+            esac
+            argc=$((argc+1))
+            ;;
+    esac
+    shift
+done
+
+#check install dir
+[ -z "$ROOT" ] && echo "ERROR: no install dir specified!!" && usage && exit 1
 
 #check if the specified version is legal
 VALID_VERSIONS="0.1 0.2.1 0.2.2 0.2.3 0.3.0"
@@ -84,6 +119,7 @@ function valid_version {
 if [ $(valid_version $VERSION) == "0" ]; then
     echo "ERROR : Illegal version $VERSION ..."
     echo "ERROR : Version must one of { $VALID_VERSIONS }"
+    usage
     exit 1
 fi
 
