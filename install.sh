@@ -152,7 +152,7 @@ PKGS="perl git build-essential subversion libboost-all-dev bison flex realpath t
 function check_package_bin {
     local PKG="$1"
     local PKG_BIN=$(which $PKG)
-    if [[ "$?" == "0" ]]; then
+    if [ -n "$PKG_BIN" ]; then
         echo "$PKG found : $PKG_BIN"
     else
         PKGS+=" $PKG"
