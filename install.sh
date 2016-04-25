@@ -168,7 +168,7 @@ function install_packages {
     
     NOT_FOUND=""
     for i in $PKGS; do
-        if ! dpkg -l $i &> /dev/null; then
+        if ! dpkg -s $i &> /dev/null; then
             NOT_FOUND+=" $i"
         fi
     done
@@ -181,7 +181,7 @@ function install_packages {
     if [ "$MZSRM" == "1" ]; then
         echo "Checking Java ..." | tee -a $LOG
         PKG="openjdk-7-jdk"
-        if ! dpkg -l $PKG &> /dev/null; then
+        if ! dpkg -s $PKG &> /dev/null; then
             echo "ERROR: please install packages: $PKG" | tee -a $LOG
             echo "e.g., run sudo apt-get install $PKG" | tee -a $LOG
             return 1
