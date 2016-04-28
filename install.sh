@@ -57,6 +57,16 @@
 VERSION=""
 MZSRM="0"
 ROOT=""
+CPUARCH=$(uname -m)
+NUMCPU=$(grep -c ^processor /proc/cpuinfo)
+[ ! -z "$(which dirname)" ] && [ ! -z "$(which realpath)" ] && \
+  PATCHES=$(echo $(dirname $(realpath ${0})))/patches
+[ -z "${PATCHES}" ] && \
+  PATCHES=$(echo $(pwd)/patches)
+[ ! -d "${PATCHES}" ] && \
+  echo "warning no patches directory found"
+[ -d "${PATCHES}" ] && [[ ${CPUARCH} =~ ^arm* ]] && \
+  echo "${CPUARCH}: patches will be applied from ${PATCHES}"
 
 #print usage
 function usage {
@@ -145,7 +155,8 @@ function create_install_dir {
 }
 
 #required packages
-PKGS="perl git build-essential subversion libboost-all-dev bison flex realpath tk xvfb libyaml-cpp-dev"
+BINS="cbmc ant realpath"
+PKGS="perl git build-essential subversion libboost-all-dev bison flex tk xvfb libyaml-cpp-dev"
 
 #check for package binaries. if not found, add them to packages to be
 #installed
@@ -164,7 +175,7 @@ function install_packages {
     echo "Checking packages ..." | tee -a $LOG
 
     #check for binaries
-    for i in cbmc ant; do check_package_bin $i; done
+    for i in ${BINS}; do check_package_bin $i; done
     
     NOT_FOUND=""
     for i in $PKGS; do
@@ -191,6 +202,21 @@ function install_packages {
     fi
 }
 
+#do patches
+# 1: path to install dir
+# 2: preBuild or postBuild patch
+# 3: package key word (one of ACE VREP)
+function dopatch {
+    local PFS=$(ls ${PATCHES}/${2}/??_${3}*.patch 2>/dev/null)
+    for pf in ${PFS}; do
+      # can we patch
+      patch --dry-run -N -b \
+        -d ${1} -p1 \
+        -i ${pf}
+      [ ${?} -eq 0 ] && patch -b -d ${1} -p1 -i ${pf}
+    done
+}
+
 function install_ace {
     export ACE_DIR=$ROOT/ace
     export ACE_ROOT=$ACE_DIR/ACE_wrappers
@@ -203,15 +229,21 @@ function install_ace {
         echo "Installing ACE ..." | tee -a $LOG
         mkdir $ACE_DIR
         echo "Checking out and configuring ACE ..." | tee -a $LOG
-        svn checkout svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE $ACE_DIR 2>&1 | tee -a $LOG
+        svn checkout --quiet svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE $ACE_DIR 2>&1 | tee -a $LOG
         cd $ACE_ROOT/ace
         echo "#include \"ace/config-linux.h\"" > config.h
         cd $ACE_ROOT/include/makeinclude
         echo "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" > platform_macros.GNU
+        if [[ ${CPUARCH} =~ ^arm* ]]; then
+          dopatch ${ACE_ROOT} preBuild ACE
+        fi
         cd $ACE_ROOT/ace
         perl $ACE_ROOT/bin/mwc.pl -type gnuace ace.mwc 2>&1 | tee -a $LOG
         echo "Compiling ACE ..." | tee -a $LOG
-        make 2>&1 | tee -a $LOG
+        make -j ${NUMCPU} 2>&1 | tee -a $LOG
+        if [[ ${CPUARCH} =~ ^arm* ]]; then
+          dopatch ${ACE_ROOT} postBuild ACE
+        fi
     fi
 }
 
@@ -226,7 +258,7 @@ function install_madara {
         cd $MADARA_ROOT
         perl $ACE_ROOT/bin/mwc.pl -type gnuace MADARA.mwc 2>&1 | tee -a $LOG
         echo "Compiling MADARA ..." | tee -a $LOG
-        make tests=1 2>&1 | tee -a $LOG
+        make -j ${NUMCPU} tests=1 2>&1 | tee -a $LOG
     fi
 }
 
@@ -256,6 +288,9 @@ function install_vrep {
                 echo "$i = true" >> vrep/system/usrset.txt
             done
         fi
+        if [[ ${CPUARCH} =~ ^arm* ]]; then
+          dopatch ${VREP_ROOT} preBuild VREP
+	fi
     fi
 }
 
@@ -273,7 +308,7 @@ function install_gams {
         cd $GAMS_ROOT
         mwc.pl -features vrep=1 -type gnuace gams.mwc 2>&1 | tee -a $LOG
         echo "Compiling GAMS ..." | tee -a $LOG
-        make tests=1 vrep=1 2>&1 | tee -a $LOG
+        make -j ${NUMCPU} tests=1 vrep=1 2>&1 | tee -a $LOG
     fi
 }
 
@@ -288,7 +323,7 @@ function install_mzsrm {
             echo "Checking out MZSRM Scheduler ..." | tee -a $LOG
             git clone https://github.com/cps-sei/mzsrm.git mzsrm 2>&1 | tee -a $LOG
             echo "Compiling MZSRM ..." | tee -a $LOG
-            cd $MZSRM_ROOT && make 2>&1 | tee -a $LOG
+            cd $MZSRM_ROOT && make -j ${NUMCPU} 2>&1 | tee -a $LOG
         fi
     fi
 }
@@ -306,7 +341,7 @@ function install_dmplc {
         git clone -b release-$VERSION https://github.com/cps-sei/dmplc.git
         cd $DMPL_ROOT
         echo "Compiling DMPLC ..." | tee -a $LOG
-        make MZSRM=$MZSRM 2>&1 | tee -a $LOG
+        make -j ${NUMCPU} MZSRM=$MZSRM 2>&1 | tee -a $LOG
     fi
 }
 
@@ -334,6 +369,7 @@ EOF
     fi
 }
 
+# main
 (create_install_dir && install_packages && install_ace && install_madara && install_vrep && install_gams && install_mzsrm && install_dmplc && create_setenv) || cleanup
 
 echo "##################################################" | tee -a $LOG
