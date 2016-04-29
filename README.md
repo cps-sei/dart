@@ -15,28 +15,19 @@ Installers for odroid/ARM using the Hardkernel repos may find the additional ins
 
 **2015-11-26 : [v0.1]**   First public release.
 
-####
-# odroid tips
-####
+#### ODroid Tips
 
-#
-# these helper instructions were gleaned from:
-#
-# http://blog.boyeau.com/quick-install-install-apache-ant-on-odroid/
-#
-
+These helper instructions were gleaned from: http://blog.boyeau.com/quick-install-install-apache-ant-on-odroid/
+```
 tar xfz apache-ant-1.9.6-bin.tar.gz
 rm -rf apache-ant-1.9.6/manual
 mkdir /opt/java
 mv apache-ant-1.9.6 /opt/java
 update-alternatives --install /usr/bin/ant ant /opt/java/apache-ant-1.9.6/bin/ant 1
+```
 
-#
-# these helper instructions were gleaned from:
-#
-# http://blog.boyeau.com/quick-install-install-java-on-odroid-ubuntu-server-14-04/
-#
-
+These helper instructions were gleaned from: http://blog.boyeau.com/quick-install-install-java-on-odroid-ubuntu-server-14-04/
+```
 tar xfz jdk-8u77-linux-arm32-vfp-hflt.tar.gz
 mkdir /usr/lib/jvm
 mv jdk1.8.0_77 /usr/lib/jvm/
@@ -45,4 +36,4 @@ update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_77/bin/
 update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_77/bin/java 1
 update-alternatives --config javac
 update-alternatives --config java
-
+```
