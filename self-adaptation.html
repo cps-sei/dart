@@ -169,8 +169,8 @@
           formal specification of the system. Then, the model checker
           solves the MDP, computing an optimal policy to achieve the
           adaptation goal. This whole process is done at run time
-          every time an adaptation decision has to be made. We are
-          developing another approach that decouples the construction
+          every time an adaptation decision has to be made. We have
+          developed another approach that decouples the construction
           of the MDP from its solution. That way, the construction of
           the MDP from formal specifications can be done offline, and
           the solution is the only part that remains to be done at run
@@ -179,7 +179,21 @@
           the environment that have to be considered at each
           iteration. In our experiments we have found the decision
           time to be reduced 10 times with respect to the decision
-          based on probabilistic model checking.
+          based on probabilistic model checking. Additionally, the
+          approach can achieve adaptation goals that involve the
+          maximization of some objective function subject to
+          probabilistic constraints. For example, it can maximize the
+          expected number of objects detected, subject to surviving the
+          mission with 95&#37; probability.
+          More details about this
+          approach can be found in the following publication:<br><br>
+          <a href="http://works.bepress.com/gabriel_moreno/28/">Proactive
+            Self-Adaptation under Uncertainty: a Probabilistic Model
+            Checking Approach</a>. Gabriel Moreno, Javier Camara,
+            David Garlan, Bradley Schmerl. <i>In proceedings of the
+            International Conference on Autonomic Computing (ICAC)</i>,
+            2016.
+          <br><br><br><br>
         </div>
       </section>
       <div class="clearfloat"></div>
